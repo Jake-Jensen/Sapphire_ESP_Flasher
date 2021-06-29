@@ -89,6 +89,8 @@ Public Class Form1
     End Sub
 
     Private Sub FlashButton_Click(sender As Object, e As EventArgs) Handles FlashButton.Click
+        WarningLabel.Enabled = True
+        FlashWarningTimer.Start()
         FlasherWorker.RunWorkerAsync()
     End Sub
 
@@ -134,34 +136,32 @@ Public Class Form1
         oStartInfo.UseShellExecute = False
         oStartInfo.RedirectStandardOutput = True
         oStartInfo.RedirectStandardError = True
+        oStartInfo.CreateNoWindow = True
         oProcess.StartInfo = oStartInfo
         oProcess.Start()
 
         Dim sOutput As String
         Using oStreamReader As System.IO.StreamReader = oProcess.StandardOutput
             sOutput = oStreamReader.ReadToEnd()
-
             Console.WriteLine(sOutput)
-
-            Dim Finderstart
-            Dim FinderEnd
-            Dim PercentLabel
-            If (sOutput.Contains("%")) Then
-                Try
-                    Finderstart = sOutput.IndexOf("(")
-                    FinderEnd = sOutput.IndexOf(")")
-                    PercentLabel = sOutput.Substring(sOutput.IndexOf("("), sOutput.Length() - sOutput.IndexOf(")") - 2)
-                    FlasherWorker.ReportProgress(PercentLabel)
-                Catch ex As Exception
-
-                End Try
-
-            End If
         End Using
         Console.WriteLine(sOutput)
+        FlasherWorker.ReportProgress(100)
     End Sub
 
     Private Sub FlasherWorker_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles FlasherWorker.ProgressChanged
-        ProgressBar1.Value = e.ProgressPercentage
+        If (e.ProgressPercentage = 100) Then
+            FlashWarningTimer.Stop()
+            WarningLabel.Enabled = False
+        End If
+    End Sub
+
+    Private Sub FlashWarningTimer_Tick(sender As Object, e As EventArgs) Handles FlashWarningTimer.Tick
+        If (WarningLabel.ForeColor = Color.Red) Then
+            WarningLabel.ForeColor = Color.Green
+        Else
+            WarningLabel.ForeColor = Color.Red
+        End If
+
     End Sub
 End Class

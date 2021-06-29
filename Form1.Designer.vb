@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -37,7 +38,8 @@ Partial Class Form1
         Me.Button3 = New System.Windows.Forms.Button()
         Me.FlasherWorker = New System.ComponentModel.BackgroundWorker()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.WarningLabel = New System.Windows.Forms.Label()
+        Me.FlashWarningTimer = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -172,15 +174,20 @@ Partial Class Form1
         Me.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous
         Me.ProgressBar1.TabIndex = 9
         '
-        'Label2
+        'WarningLabel
         '
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 48.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(9, 146)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(573, 266)
-        Me.Label2.TabIndex = 10
-        Me.Label2.Text = "FLASHING DO NOT EXIT APPLICATION"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.WarningLabel.Enabled = False
+        Me.WarningLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 48.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.WarningLabel.Location = New System.Drawing.Point(9, 146)
+        Me.WarningLabel.Name = "WarningLabel"
+        Me.WarningLabel.Size = New System.Drawing.Size(573, 266)
+        Me.WarningLabel.TabIndex = 10
+        Me.WarningLabel.Text = "FLASHING DO NOT EXIT APPLICATION"
+        Me.WarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'FlashWarningTimer
+        '
+        Me.FlashWarningTimer.Interval = 2000
         '
         'Form1
         '
@@ -188,7 +195,7 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.WarningLabel)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.ComDevLabel)
         Me.Controls.Add(Me.Button3)
@@ -200,7 +207,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Panel1)
         Me.ForeColor = System.Drawing.Color.White
         Me.Name = "Form1"
-        Me.Text = "Sapphire's ESP Flasher"
+        Me.Text = "Sapphire's ESP Flasher V0.1"
         Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -221,5 +228,6 @@ Partial Class Form1
     Friend WithEvents Button3 As Button
     Friend WithEvents FlasherWorker As System.ComponentModel.BackgroundWorker
     Friend WithEvents ProgressBar1 As ProgressBar
-    Friend WithEvents Label2 As Label
+    Friend WithEvents WarningLabel As Label
+    Friend WithEvents FlashWarningTimer As Timer
 End Class
